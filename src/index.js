@@ -34,6 +34,7 @@ function checksCreateTodosUserAvailability(request, response, next) {
 
   return next();
 }
+  
 
 function checksTodoExists(request, response, next) {
 
@@ -47,7 +48,7 @@ function checksTodoExists(request, response, next) {
   const user = users.find((user) => user.username === username);
 
   if (!user) {
-    return response.status(404).json({ error: 'id not found' });
+    return response.status(404).json({ error: 'id not found!!' });
   }
 
   const todo = user.todos.find((todo) => todo.id === id);
@@ -63,7 +64,19 @@ function checksTodoExists(request, response, next) {
 }
 
 function findUserById(request, response, next) {
-  // Complete aqui
+  
+  const { id } = request.params;
+
+  const user = users.find((user) => user.id === id);
+
+  if (!user) {
+    return response.status(404).json({ error: 'user not found!!' });
+  }
+
+  request.user = user;
+
+  return next();
+
 }
 
 app.post('/users', (request, response) => {
